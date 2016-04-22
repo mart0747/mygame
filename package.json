@@ -1,0 +1,27 @@
+{
+  "name": "mygame",
+  "version": "1.0.0",
+  "description": "An initial try at creating an online game, based on Dominion",
+  "main": "mygame.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mart0747/mygame.git"
+  },
+  "author": "Joel B. Martins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mart0747/mygame/issues"
+  },
+  "homepage": "https://github.com/mart0747/mygame#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "express-handlebars": "^3.0.0",
+    "method-override": "^2.3.5",
+    "mongoose": "^4.4.13",
+    "morgan": "^1.7.0"
+  }
+}
