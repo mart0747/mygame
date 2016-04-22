@@ -2,7 +2,7 @@
   "name": "mygame",
   "version": "1.0.0",
   "description": "An initial try at creating an online game, based on Dominion",
-  "main": "mygame.js",
+  "main": "webserver.js",
   "scripts": {
     "test": "npm test"
   },
