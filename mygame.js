@@ -1,6 +1,7 @@
 var express = require('express');
 var morgan = require('morgan');
 var app = express();
+var mongoose = require('mongoose');
 
 //
 //app settings
@@ -9,6 +10,32 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/www'));
 console.log('static files: ' + __dirname + '/www');
 app.use(morgan('dev'));
+
+//
+//initialize DB Connection
+//
+var dbURI = 'mongodb://localhost/mygame';
+var opts = {
+    server: {
+        socketOptions: {
+            keepalive: 1
+        }
+    }
+};
+
+mongoose.connect(dbURI, opts);
+
+mongoose.connection.on('connected', function () {
+    console.log('Mongoose default connection open to ' + dbURI);
+});
+
+mongoose.connection.on('error', function () {
+    console.log('Mongoose default connection error: ' + err);
+});
+
+mongoose.connection.on('disconnceted', function () {
+    console.log('Mongoose default connection disconnected');
+});
 
 //
 //routes
