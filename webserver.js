@@ -3,17 +3,14 @@ var morgan = require('morgan');
 var app = express();
 var mongoose = require('mongoose');
 
-//
 //app settings
-//
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/www'));
 console.log('static files: ' + __dirname + '/www');
 app.use(morgan('dev'));
 
-//
+
 //initialize DB Connection
-//
 var dbURI = 'mongodb://localhost/mygame';
 var opts = {
     server: {
@@ -37,9 +34,40 @@ mongoose.connection.on('disconnceted', function () {
     console.log('Mongoose default connection disconnected');
 });
 
-//
+var playerSchema = mongoose.Schema({
+    name: String
+});
+
+var player = mongoose.model('player', playerSchema);
+
+player.find(function (err, players) {
+    if (err) return console.error(err);
+
+    if (players.length > 0) {
+        console.log(players);
+    } else {
+        console.log('adding first record to DB');
+        var firstPlayer = new player({
+            name: "Bill"
+        });
+
+        firstPlayer.save(function (err, firstPlayer) {
+            if (err) return console.error(err);
+        });
+    }
+});
+
+//apis
+app.get('/api/players', function (req, res) {
+    player.find(function (err, players) {
+        if (err) return console.error(err);
+
+        res.json(players);
+    });
+});
+
+
 //routes
-//
 app.get('/', function (req, res) {
     res.sendFile('home.html', {
         root: __dirname + '/www/',
