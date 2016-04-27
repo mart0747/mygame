@@ -84,10 +84,10 @@ app.get('/', function (req, res) {
 });
 
 //custom 404 page
-app.use(function (req, res) {
-    res.status(404);
-    res.send('<p> 404 NOT FOUND</p>')
-});
+//app.use(function (req, res) {
+  //  res.status(404);
+    //res.send('<p> 404 NOT FOUND</p>')
+//});
 
 //custom 500 page
 app.use(function (err, req, res, next) {
