@@ -4,27 +4,16 @@ var expect = require('chai').expect;
 var base = 'http://localhost:3000';
 var id;
 
-describe('GET players', function () {
-    it('invalid API route should return 404', function (done) {
-        rest.get(base + '/api/invalidroute').on('complete', function (result, response) {
-            expect(response.statusCode).to.equal(404);
-            done();
-        });
-    });
+var playerNoUserName = {
+    name: 'steve'
+};
 
-    it('GET to the correct route should return 200 (Success)', function (done) {
-        rest.get(base + '/api/players').on('complete', function (result, response) {
-            expect(response.statusCode).to.equal(200);
-            done();
-        });
-    });
-});
+var playerGood = {
+    name: 'coolio',
+    username: Math.random().toString(36).substr(2, 9)
+};
 
 describe('Add Players', function () {
-
-    var playerNoUserName = {
-        name: 'steve'
-    };
 
     it('POST new player without username should return an error 403', function (done) {
         rest.post(base + '/api/player', {
@@ -35,10 +24,6 @@ describe('Add Players', function () {
         });
     });
 
-    var playerGood = {
-        name: 'coolio',
-        username: Math.random().toString(36).substr(2, 9)
-    };
 
     it('POST new player with unique username should return 200 (Success) ', function (done) {
         rest.post(base + '/api/player', {
@@ -60,6 +45,41 @@ describe('Add Players', function () {
 
         });
     });
+});
+
+describe('GET players', function () {
+    it('invalid API route should return 404', function (done) {
+        rest.get(base + '/api/invalidroute').on('complete', function (result, response) {
+            expect(response.statusCode).to.equal(404);
+            done();
+        });
+    });
+
+    it('GET to the correct route should return 200 (Success)', function (done) {
+        rest.get(base + '/api/players').on('complete', function (result, response) {
+            expect(response.statusCode).to.equal(200);
+            done();
+        });
+    });
+
+    it('Get with ID that does not exist should return error',
+        function (done) {
+            rest.get(base + '/api/player/' + id + 'BAD')
+                .on('complete', function (result, response) {
+                    expect(response.statusCode).to.equal(403);
+                    done();
+                });
+        });
+
+    it('Get with ID that exists should return success and found object should be returned',
+        function (done) {
+            rest.get(base + '/api/player/' + id).on('complete', function (result, response) {
+                expect(response.statusCode).to.equal(200);
+                expect(result.name).to.equal(playerGood.name);
+                expect(result.username).to.equal(playerGood.username);
+                done();
+            });
+        });
 });
 
 describe('Delete Player', function () {

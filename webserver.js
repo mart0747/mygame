@@ -75,6 +75,15 @@ app.get('/api/players', function (req, res) {
     });
 });
 
+app.get('/api/player/:id', function (req, res) {
+    Players.findById(req.params.id, function (err, p) {
+        if (err)
+            res.status(403).send(err);
+        else
+            res.json(p);
+    });
+});
+
 app.post('/api/player', function (req, res) {
     var newPlayer = new Players({
         name: req.body.name,
