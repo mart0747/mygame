@@ -8,7 +8,9 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/www'));
 console.log('static files: ' + __dirname + '/www');
 app.use(morgan('dev'));
-app.use(require('body-parser').urlencoded({extended:true}));
+app.use(require('body-parser').urlencoded({
+    extended: true
+}));
 
 
 //initialize DB Connection
@@ -37,7 +39,11 @@ mongoose.connection.on('disconnceted', function () {
 
 var playerSchema = mongoose.Schema({
     name: String,
-    username: { type: String, unique: true, required: true}
+    username: {
+        type: String,
+        unique: true,
+        required: true
+    }
 });
 
 var Players = mongoose.model('player', playerSchema);
@@ -50,7 +56,8 @@ Players.find(function (err, playersInDB) {
     } else {
         console.log('adding first record to DB');
         var firstPlayer = new Players({
-            name: "Bill"
+            name: "Bill",
+            username: Math.random().toString(36).substr(2, 9)
         });
 
         firstPlayer.save(function (err, firstPlayer) {
@@ -77,12 +84,29 @@ app.post('/api/player', function (req, res) {
     newPlayer.save(function (err, np) {
         if (err) {
             res.status(403).send(err);
-        }
-        else {
-            return res.json({id: np._id});
+        } else {
+            return res.json({
+                id: np._id
+            });
         }
     });
 });
+
+app.delete('/api/player/:id', function (req, res) {
+    Players.findById(req.params.id, function (err, p) {
+        if (err) {
+            res.status(403).send(err);
+        } else {
+            p.remove(function (err, pp) {
+                if (err)
+                    return res.status(403).send(err);
+
+                res.status(200).send();
+            });
+        }
+    });
+});
+
 
 //routes
 app.get('/', function (req, res) {

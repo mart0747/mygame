@@ -2,6 +2,7 @@ var rest = require('restler');
 var expect = require('chai').expect;
 
 var base = 'http://localhost:3000';
+var id;
 
 describe('GET players', function () {
     it('invalid API route should return 404', function (done) {
@@ -44,6 +45,8 @@ describe('Add Players', function () {
             data: playerGood
         }).on('complete', function (result, response) {
             expect(response.statusCode).to.equal(200);
+            expect(result.id).to.be.a('string');
+            id = result.id; //save the id so we can delete it later.
             done();
         });
     });
@@ -56,5 +59,23 @@ describe('Add Players', function () {
             done();
 
         });
+    });
+});
+
+describe('Delete Player', function () {
+    it('Delete player with invalid ID should return 403', function (done) {
+        rest.del(base + '/api/player/' + id + 'BAD')
+            .on('complete', function (result, response) {
+                expect(response.statusCode).to.equal(403);
+                done();
+            });
+    });
+
+    it('Delete the player that was successfully added', function (done) {
+        rest.del(base + '/api/player/' + id).on('complete', function (result, response) {
+            expect(response.statusCode).to.equal(200);
+            done();
+        });
+
     });
 });
