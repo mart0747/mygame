@@ -10,6 +10,7 @@ console.log('static files: ' + __dirname + '/www');
 app.use(morgan('dev'));
 app.use(require('body-parser').urlencoded({extended:true}));
 
+
 //initialize DB Connection
 var dbURI = 'mongodb://localhost/mygame';
 var opts = {
@@ -35,7 +36,8 @@ mongoose.connection.on('disconnceted', function () {
 });
 
 var playerSchema = mongoose.Schema({
-    name: String
+    name: String,
+    username: { type: String, unique: true, required: true}
 });
 
 var Players = mongoose.model('player', playerSchema);
@@ -68,13 +70,17 @@ app.get('/api/players', function (req, res) {
 
 app.post('/api/player', function (req, res) {
     var newPlayer = new Players({
-        name: req.body.name
+        name: req.body.name,
+        username: req.body.username
     });
 
     newPlayer.save(function (err, np) {
-        if (err) return res.status(500).send('Database Error');
-        
-        res.json({id: np._id});
+        if (err) {
+            res.status(403).send(err);
+        }
+        else {
+            return res.json({id: np._id});
+        }
     });
 });
 
