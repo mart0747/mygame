@@ -2,6 +2,7 @@ var express = require('express');
 var morgan = require('morgan');
 var app = express();
 var mongoose = require('mongoose');
+var blanket = require('blanket');
 
 //app settings
 app.set('port', process.env.PORT || 3000);
@@ -11,7 +12,6 @@ app.use(morgan('dev'));
 app.use(require('body-parser').urlencoded({
     extended: true
 }));
-
 
 //initialize DB Connection
 var dbURI = 'mongodb://localhost/mygame';
@@ -137,3 +137,5 @@ app.get('/', function (req, res) {
 app.listen(app.get('port'), function () {
     console.log('Express started: ' + app.get('port') + '; press Ctrl-c to terminate.');
 });
+
+module.exports.getApp = app;
