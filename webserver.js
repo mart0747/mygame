@@ -2,7 +2,6 @@ var express = require('express');
 var morgan = require('morgan');
 var app = express();
 var mongoose = require('mongoose');
-var blanket = require('blanket');
 
 //app settings
 app.set('port', process.env.PORT || 3000);
