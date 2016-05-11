@@ -10,7 +10,6 @@ module.exports = function (grunt) {
                 src: ['*.js', 'test/*.js']
             }
         },
-
         watch: {
             lint: {
                 files: '<%= jshint.files.src %>',
@@ -21,8 +20,6 @@ module.exports = function (grunt) {
                 tasks: ['jshint', 'mochaTest:unit']
             }
         },
-
-
         nodemon: {
             dev: {
                 script: 'app/app.js',
@@ -31,8 +28,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-
-
         concurrent: {
             target: {
                 tasks: ['nodemon', 'watch'],
@@ -41,18 +36,24 @@ module.exports = function (grunt) {
                 }
             }
         },
-
         mochaTest: {
             options: {
                 reporter: 'spec'
             },
             src: ['test/test-api2.js']
+        },
+        clean: {
+            coverage: {
+                src: ['test/coverage/']
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-mocha-test');
-
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    
     grunt.registerTask('default', ['jshint']);
     grunt.registerTask('test', ['mochaTest']);
+    grunt.registerTask('coverage', ['jshint', 'clean'])
 };

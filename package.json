@@ -1,39 +1,41 @@
 {
-  "name": "mygame",
-  "version": "1.0.0",
-  "description": "An initial try at creating an online game, based on Dominion",
-  "main": "webserver.js",
-  "scripts": {
-    "test": "mocha test/test-api.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mart0747/mygame.git"
-  },
-  "author": "Joel B. Martins",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mart0747/mygame/issues"
-  },
-  "homepage": "https://github.com/mart0747/mygame#readme",
-  "dependencies": {
-    "body-parser": "^1.15.0",
-    "express": "^4.13.4",
-    "express-handlebars": "^3.0.0",
-    "method-override": "^2.3.5",
-    "mongoose": "^4.4.13",
-    "morgan": "^1.7.0",
-    "restler": "^3.4.0"
-  },
-  "devDependencies": {
-    "blanket": "^1.2.3",
-    "chai": "^3.5.0",
-    "grunt": "^1.0.1",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-mocha-test": "^0.12.7",
-    "istanbul": "^0.4.3",
-    "jshint-stylish": "^2.2.0",
-    "mocha": "^2.4.5",
-    "supertest": "^1.2.0"
-  }
+    "name": "mygame",
+    "version": "1.0.0",
+    "description": "An initial try at creating an online game, based on Dominion",
+    "main": "webserver.js",
+    "scripts": {
+        "coverage": "istanbul cover _mocha test/test-api-supertest.js -- -R spec",
+        "test": "mocha test/test-api-supertest.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mart0747/mygame.git"
+    },
+    "author": "Joel B. Martins",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/mart0747/mygame/issues"
+    },
+    "homepage": "https://github.com/mart0747/mygame#readme",
+    "dependencies": {
+        "body-parser": "^1.15.0",
+        "express": "^4.13.4",
+        "express-handlebars": "^3.0.0",
+        "method-override": "^2.3.5",
+        "mongoose": "^4.4.13",
+        "morgan": "^1.7.0",
+        "restler": "^3.4.0"
+    },
+    "devDependencies": {
+        "blanket": "^1.2.3",
+        "chai": "^3.5.0",
+        "grunt": "^1.0.1",
+        "grunt-contrib-clean": "^1.0.0",
+        "grunt-contrib-jshint": "^1.0.0",
+        "grunt-mocha-test": "^0.12.7",
+        "istanbul": "^0.4.3",
+        "jshint-stylish": "^2.2.0",
+        "mocha": "^2.4.5",
+        "supertest": "^1.2.0"
+    }
 }
