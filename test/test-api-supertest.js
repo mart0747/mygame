@@ -26,7 +26,7 @@ describe('Add Players', function () {
             request(app)
                 .post('/api/player')
                 .send(playerNoUserName)
-                .type('form')
+                //.type('form')
                 .expect(403, done);
         });
 
@@ -35,7 +35,7 @@ describe('Add Players', function () {
             request(app)
                 .post('/api/player')
                 .send(playerGood)
-                .type('form')
+                //.type('form')
                 .expect(200)
                 .end(function (err, res) {
                     id = res.body.id; //save id so we can delete it later.   
@@ -48,7 +48,7 @@ describe('Add Players', function () {
             request(app)
                 .post('/api/player')
                 .send(playerGood)
-                .type('form')
+                //.type('form')
                 .expect(403, done);
         });
 });
@@ -92,7 +92,7 @@ it('Delete player with invalid ID should return 403',
     function (done) {
         request(app)
             .delete('/api/player/' + id + 'BAD')
-            .type('form')
+            //.type('form')
             .expect(403, done);
     });
 
@@ -100,7 +100,7 @@ it('Delete the player that was successfully added',
     function (done) {
         request(app)
             .delete('/api/player/' + id)
-            .type('form')
+            //.type('form')
             .expect(200, done);
     });
 });

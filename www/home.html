@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>My Online Game</title>
+    <title>Online Dominion</title>
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <!-- load bootstrap -->
@@ -36,10 +36,37 @@
 <body ng-controller="mainController">
     <div class="container">
         <div class="jumbotron text-center">
-            <h1>My Online Game <span class = "label label-info">{{players.length}}</span></h1>
+            <h1>Online Dominion <span class = "label label-info">{{players.length}}</span></h1>
+        </div>
+        
+        <!-- LIST Players -->
+        <div id="todo-list" class="row">
+            <h2>Select Players</h2>
+            <div class="col-sm-4 col-sm-offset-4">
+                <div class="checkbox" ng-repeat="player in players">
+                    <label>
+                        <input type="checkbox" ng-click="deleteTodo(player._id)"> {{player.name}}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Players -->
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                    <div class="form-group">
+
+                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                        <input type="text" class="form-control input-lg text-center" placeholder="Bill Clinton" ng-model="formData.text">
+                    </div>
+
+                    <!-- createToDo() WILL CREATE NEW TODOS -->
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="AddNewPlayer()">Add New Player</button>
+                </form>
+            </div>
         </div>
     </div>
-
 </body>
 
 </html>

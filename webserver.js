@@ -8,9 +8,12 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/www'));
 console.log('static files: ' + __dirname + '/www');
 app.use(morgan('dev'));
-app.use(require('body-parser').urlencoded({
+/*app.use(require('body-parser').urlencoded({
     extended: true
 }));
+*/
+
+app.use(require('body-parser').json());
 
 //initialize DB Connection
 var dbURI = 'mongodb://localhost/mygame';
@@ -84,11 +87,16 @@ app.get('/api/player/:id', function (req, res) {
 });
 
 app.post('/api/player', function (req, res) {
+    console.log(req.player); 
+    console.log(req.body);
+    console.log(req.data);
+    
     var newPlayer = new Players({
         name: req.body.name,
         username: req.body.username
     });
 
+    console.log(newPlayer);
     newPlayer.save(function (err, np) {
         if (err) {
             res.status(403).send(err);
